@@ -2,8 +2,7 @@ import turtle
 import Network
 import numpy
 
-global points
-NoPoints = 2
+NoPoints = 4
 def drawAxis():
   turtle.forward(1000)
   turtle.backward(2000)
@@ -19,8 +18,7 @@ def plotGraph(coefficients):
   for i in range(-610,610):
     yCoord = 0
     for j in range(len(coefficients)-1,-1,-1):
-      yCoord += coefficients[j]*i**j
-    
+      yCoord += coefficients[j]*(i**j)
     turtle.goto(i,yCoord)
     turtle.pendown()
     
@@ -30,9 +28,11 @@ def plotGraph(coefficients):
 def train():
     coefficients = numpy.zeros(NoPoints)
     bob = Network.Network(points)
-    bob.train
+    bob.train()
     coefficients = bob.coef
+    print(coefficients)
     plotGraph(coefficients)
+    print('Done!')
 # screen object 
 wn = turtle.Screen() 
   
