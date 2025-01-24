@@ -1,5 +1,9 @@
 import turtle 
+import Network
+import numpy
 
+global points
+NoPoints = 2
 def drawAxis():
   turtle.forward(1000)
   turtle.backward(2000)
@@ -10,9 +14,25 @@ def drawAxis():
   turtle.forward(1000)
   turtle.right(90)
   
+def plotGraph(coefficients):
+  turtle.pencolor("red")
+  for i in range(-610,610):
+    yCoord = 0
+    for j in range(len(coefficients)-1,-1,-1):
+      yCoord += coefficients[j]*i**j
+    
+    turtle.goto(i,yCoord)
+    turtle.pendown()
+    
 
-def exitprogram():
-    wn.bye()
+
+
+def train():
+    coefficients = numpy.zeros(NoPoints)
+    bob = Network.Network(points)
+    bob.train
+    coefficients = bob.coef
+    plotGraph(coefficients)
 # screen object 
 wn = turtle.Screen() 
   
@@ -22,12 +42,14 @@ def fxn(x, y):
   turtle.goto(x, y) 
   turtle.stamp()
   turtle.write(str(x)+","+str(y)) 
-  if len(points) == 6:
-    exitprogram()
+  if len(points) == NoPoints:
+    train()
   
 # onclick action
 points = []
 turtle.speed(0)
+turtle.screensize(canvwidth=400, canvheight=400, 
+                  bg="white")
 drawAxis()
 turtle.penup()
 turtle.shape("circle") 
