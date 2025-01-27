@@ -2,7 +2,7 @@ import turtle
 import Network2
 import numpy
 from tqdm import tqdm
-
+import matplotlib.pyplot as plt
 
 import numpy as np
 
@@ -12,6 +12,7 @@ deltaLosses = []
 coef = []
 learningRates= []
 exitConditions = []
+
 def drawAxis():
   turtle.forward(1000)
   turtle.backward(2000)
@@ -54,12 +55,19 @@ def plotGraph(coefficients):
 
 
 def train():
-  bob = Network2.Network(points, 500000, 0.00005)
-  bob.train()
-  print(bob.loss)
-  print(bob.coef)
-  plotGraph(bob.coef)
+  for i in tqdm(range(0,10)):
+    bob = Network2.Network([[-100,-100],[100,100]], 500000, 0.0000005)
+    startGuess = []
+    startGuess = bob.coef
+    bob.train()
+    print(bob.loss)
+    print(bob.coef)
+    plt.plot(bob.iteration, bob.losses, label = str(startGuess))
+  leg = plt.legend(loc='upper center')
+  plt.ylim(0, 10**10)
+  plt.show()
 # screen object 
+
 wn = turtle.Screen() 
 
 # method to perform action 
@@ -71,6 +79,7 @@ def fxn(x, y):
   if len(points) == NoPoints:
     train()
   
+
 # onclick action
 points = []
 turtle.speed(0)

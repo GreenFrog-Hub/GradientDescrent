@@ -9,7 +9,7 @@ class Network:
         self.dataXs = []
         self.dataX = np.zeros(len(self.data))
         self.dataY = np.zeros(len(self.data))
-        self.coef = np.random.randint(-200,200,len(data))
+        self.coef = np.random.randint(-2,2,len(data))
         #self.coef = np.random.randn(2)
         #self.coef[0] = random.randint(-600,600)
 
@@ -31,7 +31,8 @@ class Network:
         
         
     def train(self):
-        self.losses = []
+        self.losses = np.zeros(self.passes)
+        self.iteration = np.zeros(self.passes)
         self.deltaLoss = 5
         self.prevLoss = 0
         for i in tqdm(range(self.passes)):
@@ -42,7 +43,9 @@ class Network:
             self.forwardPass()
             self.backPass()
             self.tweak()
-            print(self.loss)
+            #print(self.loss)
+            self.losses.put(i, self.loss)
+            self.iteration.put(i, i)
 
 
 
