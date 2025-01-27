@@ -1,16 +1,17 @@
 import turtle 
-import Network
+import Network2
 import numpy
 from tqdm import tqdm
 
 
 import numpy as np
 
-NoPoints = 6
+NoPoints = 2
 losses = []
 deltaLosses = []
 coef = []
 learningRates= []
+exitConditions = []
 def drawAxis():
   turtle.forward(1000)
   turtle.backward(2000)
@@ -31,27 +32,33 @@ def plotGraph(coefficients):
     turtle.pendown()
 
 
+# def train():
+#     for i in tqdm(range(0,1)):
+#       for j in tqdm(range(0,50)):
+#         bob = Network2.Network(points, 5000, 0.0000001)
+#         bob.train()
+#         #losses.append(bob.totalLoss)
+#         coef.append(bob.coef)
+#         # deltaLosses.append(bob.deltaLoss)
+#         # learningRates.append(bob.learnRate)
+#         # exitConditions.append(bob.exitCondition)
+#     # for i in range(len(exitConditions)-1):
+#     #   if exitConditions[i] == 0:
+#     #     print("found:", i)
+#     # print(min(losses))
+#     print(coef[losses.index(min(losses))])
+#     # print(deltaLosses[losses.index(min(losses))])
+#     # print(learningRates[losses.index(min(losses))])
+#     # count = 0
+#     plotGraph(coef[losses.index(min(losses))])
+
+
 def train():
-    for i in tqdm(range(-18,0)):
-      for j in tqdm(range(0,1000000)):
-        bob = Network.Network(points, 50, 1*(10**(-(i))))
-        bob.train()
-        losses.append(bob.MinLoss)
-        coef.append(bob.coef)
-        deltaLosses.append(bob.deltaLoss)
-        learningRates.append(bob.learnRate)
-    print(min(losses))
-    print(coef[losses.index(min(losses))])
-    print(deltaLosses[losses.index(min(losses))])
-    print(learningRates[losses.index(min(losses))])
-    count = 0
-    for i in tqdm(range(0,len(deltaLosses)-1)):
-      if deltaLosses[i] < 1:
-        count += 1
-    print("Global minimums found = ",count,"/",len(deltaLosses))
-    plotGraph(coef[losses.index(min(losses))])
-
-
+  bob = Network2.Network(points, 500000, 0.00005)
+  bob.train()
+  print(bob.loss)
+  print(bob.coef)
+  plotGraph(bob.coef)
 # screen object 
 wn = turtle.Screen() 
 
