@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 import numpy as np
 
-NoPoints = 2
+NoPoints = 3
 losses = []
 deltaLosses = []
 coef = []
@@ -53,26 +53,27 @@ def plotGraph(coefficients):
 #     # count = 0
 #     plotGraph(coef[losses.index(min(losses))])
 
-
+  
 def train():
-  for i in tqdm(range(0,10)):
-    bob = Network2.Network([[-100,-100],[100,100]], 500000, 0.0000005)
+  for i in tqdm(range(0,1)):
+    bob = Network2.Network(points, 2500000, 0.0000005)
     startGuess = []
     startGuess = bob.coef
     bob.train()
     print(bob.loss)
     print(bob.coef)
+    plotGraph(bob.coef)
     plt.plot(bob.iteration, bob.losses, label = str(startGuess))
   leg = plt.legend(loc='upper center')
   plt.ylim(0, 10**10)
-  plt.show()
+  #plt.show()
 # screen object 
 
 wn = turtle.Screen() 
 
 # method to perform action 
 def fxn(x, y): 
-  points.append([x, y])
+  points.append([x/100, y/100])
   turtle.goto(x, y) 
   turtle.stamp()
   turtle.write(str(x)+","+str(y)) 

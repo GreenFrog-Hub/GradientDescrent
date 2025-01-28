@@ -9,9 +9,11 @@ class Network:
         self.dataXs = []
         self.dataX = np.zeros(len(self.data))
         self.dataY = np.zeros(len(self.data))
-        self.coef = np.random.randint(-2,2,len(data))
+        #self.coef = np.random.randint(-600,600,len(data))
+        self.coef = np.random.randn(len(self.data))
         #self.coef = np.random.randn(2)
         #self.coef[0] = random.randint(-600,600)
+
 
         self.passes = passes
         for i in range(len(self.data)):
@@ -63,8 +65,8 @@ class Network:
         
         for i in range(len(self.data)):
             for j in range(len(self.data)):
-                dotVector.put(i, self.dataXs[j][1] ** i)
-            self.grad.put(i, 2* np.dot(self.dataYHat, dotVector))
+                dotVector.put(j, self.dataXs[j][1] ** i)
+            self.grad.put(i, 2* np.dot(self.deltaYHat, dotVector))
     
     def tweak(self):
         mag = np.linalg.norm(self.grad)
