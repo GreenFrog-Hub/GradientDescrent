@@ -9,11 +9,15 @@ class Network:
         self.dataXs = []
         self.dataX = np.zeros(len(self.data))
         self.dataY = np.zeros(len(self.data))
-        #self.coef = np.random.randint(-600,600,len(data))
         self.coef = np.random.randn(len(self.data))
+
+        #self.coef = np.random.randint(-600,600,len(data))
         #self.coef = np.random.randn(2)
         #self.coef[0] = random.randint(-600,600)
 
+        # self.coef = np.zeros(len(self.data))
+        # self.coef.put(0,0)
+        # self.coef.put(1,1)
 
         self.passes = passes
         for i in range(len(self.data)):
@@ -27,10 +31,6 @@ class Network:
         self.learnRate = learnRate
 
         self.graph = []
-
-        
-        
-        
         
     def train(self):
         self.losses = np.zeros(self.passes)
@@ -46,10 +46,8 @@ class Network:
             self.backPass()
             self.tweak()
             #print(self.loss)
-            self.losses.put(i, self.loss)
+            self.losses.put(i, self.loss*1000)
             self.iteration.put(i, i)
-
-
 
     
     def forwardPass(self):
@@ -61,16 +59,16 @@ class Network:
             
     
     def backPass(self):
-        dotVector = np.zeros(len(self.data))
-        
         for i in range(len(self.data)):
+            yVector = np.zeros(len(self.data))
             for j in range(len(self.data)):
-                dotVector.put(j, self.dataXs[j][1] ** i)
-            self.grad.put(i, 2* np.dot(self.deltaYHat, dotVector))
+                yVector.put(j, self.deltaYHat[i])
+            self.grad += 2*yVector*self.dataXs[i]
+
     
     def tweak(self):
         mag = np.linalg.norm(self.grad)
-        self.coef = self.coef - self.learnRate * self.grad
+        self.coef = self.coef - self.learnRate * self.grad 
     
 
 

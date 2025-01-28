@@ -5,14 +5,13 @@ from tqdm import tqdm
 import matplotlib.pyplot as plt
 
 import numpy as np
-
 NoPoints = 3
 losses = []
 deltaLosses = []
 coef = []
 learningRates= []
 exitConditions = []
-
+backUpPoint = [[-100,-100],[100,100]]
 def drawAxis():
   turtle.forward(1000)
   turtle.backward(2000)
@@ -24,56 +23,34 @@ def drawAxis():
   turtle.right(90)
 
 def plotGraph(coefficients):
+  plotPoints = np.arange(-0.610,0.610,0.001)
   turtle.pencolor("red")
-  for i in tqdm(range(-610,610)):
+  for i in tqdm(plotPoints):
     yCoord = 0
     for j in range(len(coefficients)-1,-1,-1):
-      yCoord += coefficients[j]*(i**j)
-    turtle.goto(i,yCoord)
+      yCoord += (coefficients[j])*(i**j)
+    turtle.goto(i*1000,yCoord*1000)
     turtle.pendown()
 
-
-# def train():
-#     for i in tqdm(range(0,1)):
-#       for j in tqdm(range(0,50)):
-#         bob = Network2.Network(points, 5000, 0.0000001)
-#         bob.train()
-#         #losses.append(bob.totalLoss)
-#         coef.append(bob.coef)
-#         # deltaLosses.append(bob.deltaLoss)
-#         # learningRates.append(bob.learnRate)
-#         # exitConditions.append(bob.exitCondition)
-#     # for i in range(len(exitConditions)-1):
-#     #   if exitConditions[i] == 0:
-#     #     print("found:", i)
-#     # print(min(losses))
-#     print(coef[losses.index(min(losses))])
-#     # print(deltaLosses[losses.index(min(losses))])
-#     # print(learningRates[losses.index(min(losses))])
-#     # count = 0
-#     plotGraph(coef[losses.index(min(losses))])
-
-  
 def train():
-  for i in tqdm(range(0,1)):
-    bob = Network2.Network(points, 2500000, 0.0000005)
-    startGuess = []
-    startGuess = bob.coef
-    bob.train()
-    print(bob.loss)
-    print(bob.coef)
-    plotGraph(bob.coef)
-    plt.plot(bob.iteration, bob.losses, label = str(startGuess))
-  leg = plt.legend(loc='upper center')
-  plt.ylim(0, 10**10)
-  #plt.show()
+  bob = Network2.Network(points, 10000000, 0.1)
+  startGuess = []
+  startGuess = bob.coef
+  bob.train()
+  print(bob.loss)
+  print(bob.coef)
+  plt.plot(bob.iteration, bob.losses, label = str(startGuess))
+  #leg = plt.legend(loc='upper center')
+  plt.ylim(0,5* 10**4)
+  plt.show()
+  plotGraph(bob.coef)
 # screen object 
 
 wn = turtle.Screen() 
 
 # method to perform action 
 def fxn(x, y): 
-  points.append([x/100, y/100])
+  points.append([x/1000, y/1000])
   turtle.goto(x, y) 
   turtle.stamp()
   turtle.write(str(x)+","+str(y)) 
