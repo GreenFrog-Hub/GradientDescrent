@@ -1,17 +1,17 @@
 import turtle 
-import Network2
+from Network2 import Network
 import numpy
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 
 import numpy as np
-NoPoints = 3
+NoPoints = 4
 losses = []
 deltaLosses = []
 coef = []
 learningRates= []
 exitConditions = []
-backUpPoint = [[-100,-100],[100,100]]
+backUpPoint = [[-100/1000,-100/1000],[100/1000,100/1000],[-100/1000,100/1000],[100/1000,-100/1000]]
 def drawAxis():
   turtle.forward(1000)
   turtle.backward(2000)
@@ -33,14 +33,14 @@ def plotGraph(coefficients):
     turtle.pendown()
 
 def train():
-  bob = Network2.Network(points, 10000000, 0.1)
+  bob = Network(points, 1000000, 0.1)
   startGuess = []
   startGuess = bob.coef
   bob.train()
   print(bob.loss)
   print(bob.coef)
   plt.plot(bob.iteration, bob.losses, label = str(startGuess))
-  #leg = plt.legend(loc='upper center')
+  leg = plt.legend(loc='upper center')
   plt.ylim(0,5* 10**4)
   plt.show()
   plotGraph(bob.coef)

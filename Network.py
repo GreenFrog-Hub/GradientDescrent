@@ -29,7 +29,7 @@ class Network:
         self.losses = []
         self.deltaLoss = 5
         self.prevLoss = 0
-        for i in range(self.passes):
+        for i in tqdm(range(self.passes)):
             self.grad = np.zeros(len(self.data))
             self.delatY = np.zeros(len(self.data))
             self.dataYHat = np.zeros(len(self.data))
